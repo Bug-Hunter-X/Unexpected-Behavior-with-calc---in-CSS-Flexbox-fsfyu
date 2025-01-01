@@ -1,0 +1,19 @@
+The issue stems from using `calc()` to subtract from `100%` within a flex item where the `100%` is relative to the flex container's available space, not the viewport.  This can lead to unexpected results due to the flexbox's content distribution algorithm.
+
+Here's a potential solution:
+
+```css
+/* Instead of relying on `calc(100% - 10px)`, consider using flex-grow, flex-shrink, and flex-basis. */
+.container {
+  display: flex;
+}
+
+.item {
+  flex-grow: 1; /* Allow the item to grow to fill available space */
+  flex-shrink: 1; /* Allow the item to shrink if necessary */
+  flex-basis: 0; /* Ensure the initial size is zero, allowing flex-grow to handle the full space */
+  margin: 5px; /* Add margin instead of subtracting from width */
+}
+```
+
+Alternatively, if you absolutely need to use `calc()`, you may need to adjust the calculations based on the container's actual available size instead of relying on `100%`.  This might involve JavaScript or more complex CSS techniques.
